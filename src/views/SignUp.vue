@@ -28,26 +28,26 @@
                             <ErrorComponent v-if="error" :error="error"/>
                             <form @submit.prevent="handleSubmit">
                                 <div class="d-flex justify-content-between">
-                                    <div class="mb-4">
+                                    <div class="mb-4" >
                                         <label class="text-black-100 font-weight-bold mb-1">First Name</label><br>
-                                        <input type="text" v-model="firstname" placeholder="Enter First Name" required>
+                                        <input type="text" :class="{'input-has-value-style': computedFirstNameStyleEnable}"  v-model="firstname" placeholder="Enter First Name" required>
                                     </div>
                                     <div class="mb-4">
                                         <label class="text-black-100 font-weight-bold mb-1">Last Name</label><br>
-                                        <input type="text" v-model="lastname" placeholder="Enter Last Name" required>
+                                        <input type="text" v-model="lastname" :class="{'input-has-value-style': computedLastNameStyleEnable}" placeholder="Enter Last Name" required>
                                     </div>
                                 </div>
                                 <div class="mb-4">
                                     <label class="text-black-100 font-weight-bold mb-1">Email Address</label>
-                                    <input type="email" v-model="email" placeholder="Enter Email" class="w-100" required>
+                                    <input type="email" v-model="email" :class="{'input-has-value-style': computedEmailStyleEnable}" placeholder="Enter Email" class="w-100" required>
                                 </div>
                                 <div class="mb-4">
                                     <label class="text-black-100 font-weight-bold mb-1">Password</label>
-                                    <input type="password" v-model="password" placeholder="Enter Password" class="w-100" required>
+                                    <input type="password" v-model="password" :class="{'input-has-value-style': computedPasswordStyleEnable}" placeholder="Enter Password" class="w-100" required>
                                 </div>
                                 <div class="mb-4">
                                     <label class="text-black-100 font-weight-bold mb-1">Confirm Password</label>
-                                    <input type="password" v-model="password_confirmation" placeholder="Confirm Password" class="w-100" required>
+                                    <input type="password" v-model="password_confirmation" :class="{'input-has-value-style': computedPasswordConfirmStyleEnable}" placeholder="Confirm Password" class="w-100" required>
                                 </div>
                                 <div>
                                     <button type="submit" class="font-weight-bold w-100">SIGN UP</button>
@@ -78,7 +78,7 @@ export default {
     },
     data() {
         return {
-            firstname: '',
+            firstname: 'Habee',
             lastname: '',
             email : '',
             password: '',
@@ -102,8 +102,29 @@ export default {
       }catch (e) {
           this.error = "Error occured";
       }
-     }
- }
+     },
+     applyInputStyle: function (targetInput) { // bind with one method and return Array
+      return [targetInput && targetInput.length > 0 ? 'input-has-value-style' : 'input-no-value-style']
+    }
+ },
+
+ computed: {
+    computedFirstNameStyleEnable: function () { 
+      return this.firstname && this.firstname.length > 0;
+    },
+    computedLastNameStyleEnable: function () { 
+      return this.lastname && this.lastname.length > 0;
+    },
+    computedEmailStyleEnable: function () { 
+      return this.email && this.email.length > 0;
+    },
+    computedPasswordStyleEnable: function () { 
+      return this.password && this.password.length > 0;
+    },
+    computedPasswordConfirmStyleEnable: function () { 
+      return this.password_confirmation && this.password_confirmation.length > 0;
+    }
+  },
  
  
 }
@@ -111,13 +132,16 @@ export default {
 
 <style lang="scss" scoped>
   .fundall-main{
+    font-family: 'Circular Std', sans-serif;
     padding:80px 50px ;
     .fundall-sub{
-        //height:85vh;
         border-radius: 40px;
         .fundall-subb{
             padding:40px 89px 40px 40px;
             border-radius:40px;
+            .input-has-value-style {
+                border: 1px solid #4DE897 !important;
+            }
             .form_main{
                 border-radius: 10px;
                 padding:70px;
@@ -136,6 +160,7 @@ export default {
                             font-size: 18px;
                             font-style: italic;
                             opacity:50%;
+                            font-family: 'Nunito Sans', sans-serif;
                         }
                     }
                     button{
@@ -148,7 +173,7 @@ export default {
             }
             .terms{
                 color: hsla(156, 17%, 23%, 0.5);
-
+                font-family: 'Nunito Sans', sans-serif;
             }
             
         }

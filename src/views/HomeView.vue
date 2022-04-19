@@ -34,6 +34,7 @@ export default {
 
 <style lang="scss" scoped>
   .fundall-main{
+    font-family: 'Circular Std', sans-serif;
     height:100vh;
     .fundall-sub{
         height:85vh;

@@ -1,3 +1,15 @@
 .pointer{
     cursor:pointer;
 }
+.link{
+    text-decoration: none;
+    &:hover{
+        color:#4DE897;
+    }
+}
+.circular-std{
+    font-family: 'Circular Std', sans-serif;
+}
+.nunito-sans{
+    font-family: 'Nunito Sans', sans-serif;
+}

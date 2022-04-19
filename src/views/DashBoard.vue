@@ -73,32 +73,32 @@
                             <form @submit.prevent="submit">
                                 <div class="mb-4">
                                     <label class="text-black font-weight-medium mb-1">Target Monthly Expenses</label><br>
-                                    <input type="text" :class="{'blue': monthly_expenses !='' }" v-model="monthly_expenses" class="w-70">
+                                    <input type="text" :class="{'input-has-value-style': computedMonthlyExpensesStyleEnable}" v-model="monthly_expenses" class="w-70">
                                 </div>
                                 <div class="mb-4">
                                     <label class="text-black font-weight-medium mb-1">Date</label><br>
-                                    <input type="text" v-model="date" class="w-70">
+                                    <input type="text" v-model="date" :class="{'input-has-value-style': computedDateStyleEnable}" class="w-70">
                                 </div>
                                  <div class="mb-4">
                                     <label class="text-black-100 font-weight-medium mb-1">Today's Expenses</label>
                                     <div class="d-flex justify-content-between mt-2">
-                                        <input type="text" v-model="first_item" placeholder="pizza" class="w-55">
-                                        <input type="text" v-model="first_item_amount" placeholder="10,000" class="w-40">
+                                        <input type="text" v-model="first_item" :class="{'input-has-value-style': computedFirstItemStyleEnable}" placeholder="pizza" class="w-55">
+                                        <input type="text" v-model="first_item_amount" :class="{'input-has-value-style': computedFirstItemAmountStyleEnable}" placeholder="10,000" class="w-40">
                                     </div>
                                     <div class="d-flex justify-content-between mt-2">
-                                        <input type="text" v-model="second_item" placeholder="Textbook" class="w-55">
-                                        <input type="text" v-model="second_item_amount" placeholder="10,000" class="w-40">
+                                        <input type="text" v-model="second_item" :class="{'input-has-value-style': computedSecondItemStyleEnable}" placeholder="Textbook" class="w-55">
+                                        <input type="text" v-model="second_item_amount" :class="{'input-has-value-style': computedSecondItemAmountStyleEnable}" placeholder="10,000" class="w-40">
                                     </div>
                                     <div class="d-flex justify-content-between mt-2">
-                                        <input type="text" v-model="third_item" placeholder="Tuition fee" class="w-55">
-                                        <input type="text" v-model="third_item_amount" placeholder="10,000" class="w-40">
+                                        <input type="text" v-model="third_item" :class="{'input-has-value-style': computedThirdItemStyleEnable}" placeholder="Tuition fee" class="w-55">
+                                        <input type="text" v-model="third_item_amount" :class="{'input-has-value-style': computedThirdItemAmountStyleEnable}" placeholder="10,000" class="w-40">
                                     </div>
                                 </div>
                                 <div class="d-flex justify-content-end align-items-center">
                                     <p class="w-60">
                                         <span class="text-black font-weight-medium">Total Actual Expenses: </span>
                                         <span class="font-weight-bold text-black size-20">₦ </span>   
-                                        <input type="text" v-model="total_expenses" class="w-45">
+                                        <input type="text" :class="{'input-has-value-style': computedTotalExpensesStyleEnable}" v-model="total_expenses" class="w-45">
                                     </p>
                                 </div>
                                 <div class="d-flex justify-content-center mt-2">
@@ -159,12 +159,43 @@ export default {
             }
             localStorage.setItem('user-info', JSON.stringify(result));
         }
-    }
+    },
+    computed: {
+    computedMonthlyExpensesStyleEnable: function () { 
+      return this.monthly_expenses && this.monthly_expenses.length > 0;
+    },
+    computedDateStyleEnable: function () { 
+      return this.date && this.date.length > 0;
+    },
+    computedFirstItemStyleEnable: function () { 
+      return this.first_item && this.first_item.length > 0;
+    },
+    computedFirstItemAmountStyleEnable: function () { 
+      return this.first_item_amount && this.first_item_amount.length > 0;
+    },
+    computedSecondItemStyleEnable: function () { 
+      return this.second_item && this.second_item.length > 0;
+    },
+    computedSecondItemAmountStyleEnable: function () { 
+      return this.second_item_amount && this.second_item_amount.length > 0;
+    },
+    computedThirdItemStyleEnable: function () { 
+      return this.third_item && this.third_item.length > 0;
+    },
+    computedThirdItemAmountStyleEnable: function () { 
+      return this.third_item_amount && this.third_item_amount.length > 0;
+    },
+    computedTotalExpensesStyleEnable: function () { 
+      return this.total_expenses && this.total_expenses.length > 0;
+    },
+   
+  },
 }
 </script>
 
 <style lang="scss" scoped>
   .fundall-main{
+    font-family: 'Circular Std', sans-serif;
     padding:80px 50px ;
     .fundall-sub{
         //height:85vh;
@@ -175,6 +206,9 @@ export default {
         .fundall-subb{
             padding:40px 60px 40px 60px;
             border-radius:40px;
+            .input-has-value-style {
+                border: 1px solid #4DE897 !important;
+            }
             .progress{
                 height:7px;
                 width: 57%;
@@ -196,9 +230,11 @@ export default {
                 table{
                     th{
                         padding: 0px 120px 0px 30px;
+                        font-family: 'Nunito Sans', sans-serif;
                     }    
                    td{
                         padding:20px 60px 30px 30px;
+                        font-family: 'Nunito Sans', sans-serif;
                    }
                    img{
                         padding-left: 20px
@@ -233,6 +269,7 @@ export default {
                         font-size:18px;     
                         &::placeholder{
                             color:#30443C;
+                            font-family: 'Nunito Sans', sans-serif;
                             font-size: 18px;
                             font-style: italic;
                             opacity:50%;

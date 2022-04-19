@@ -32,11 +32,11 @@
                             <form @submit.prevent="handleSubmit">
                                 <div class="mb-4">
                                     <label class="text-black-100 font-weight-bold mb-1" for="email">Email or Username</label>
-                                    <input type="text" v-model="email" placeholder="Enter Email" class="w-100">
+                                    <input type="text" v-model="email" :class="{'input-has-value-style': computedEmailStyleEnable}" placeholder="Enter Email" class="w-100">
                                 </div>
                                 <div class="mb-4">
                                     <label class="text-black-100 font-weight-bold mb-1" for="password">Password</label>
-                                    <input type="text" v-model="password" placeholder="Enter Password" class="w-100">
+                                    <input type="text" v-model="password" :class="{'input-has-value-style': computedPasswordStyleEnable}" placeholder="Enter Password" class="w-100">
                                 </div>
                                 <div>
                                     <button type="submit" class="font-weight-bold w-100">LOGIN</button>
@@ -65,7 +65,7 @@ export default {
     },
     data() {
         return {
-            email: "",
+            email: "jane_doe@gma",
             password: "",
             error: ""
         }
@@ -84,12 +84,22 @@ export default {
                 this.error = "Invalid username and password"
          }
      }
- }
+ },
+ computed: {
+    computedEmailStyleEnable: function () { 
+      return this.email && this.email.length > 0;
+    },
+    computedPasswordStyleEnable: function () { 
+      return this.password && this.password.length > 0;
+    },
+   
+  },
 }
 </script>
 
 <style lang="scss" scoped>
   .fundall-main{
+    font-family: 'Circular Std', sans-serif;
     padding:80px 50px ;
     .fundall-sub{
         //height:85vh;
@@ -97,6 +107,9 @@ export default {
         .fundall-subb{
             padding:40px 89px 40px 40px;
             border-radius:40px;
+            .input-has-value-style {
+                border: 1px solid #4DE897 !important;
+            }
             .form_main{
                 border-radius: 10px;
                 padding: 60px;
@@ -115,6 +128,7 @@ export default {
                             font-size: 18px;
                             font-style: italic;
                             opacity:50%;
+                            font-family: 'Nunito Sans', sans-serif;
                         }
                     }
                     button{
@@ -128,6 +142,7 @@ export default {
             .terms{
                 color: hsla(156, 17%, 23%, 0.5);
                 width:70%;
+                font-family: 'Nunito Sans', sans-serif;
             } 
         }
     }
