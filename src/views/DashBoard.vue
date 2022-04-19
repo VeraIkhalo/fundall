@@ -70,14 +70,14 @@
                                     <img src="../assets/background-img-three.svg" alt="">
                                </div>
                             </div>
-                            <form @submit.prevent="submit">
+                            <form>
                                 <div class="mb-4">
                                     <label class="text-black font-weight-medium mb-1">Target Monthly Expenses</label><br>
                                     <input type="text" :class="{'input-has-value-style': computedMonthlyExpensesStyleEnable}" v-model="monthly_expenses" class="w-70">
                                 </div>
                                 <div class="mb-4">
                                     <label class="text-black font-weight-medium mb-1">Date</label><br>
-                                    <input type="text" v-model="date" :class="{'input-has-value-style': computedDateStyleEnable}" class="w-70">
+                                    <input type="text" v-model="date" :class="{'input-has-value-style': computedDateStyleEnable}" class="w-70" required>
                                 </div>
                                  <div class="mb-4">
                                     <label class="text-black-100 font-weight-medium mb-1">Today's Expenses</label>
@@ -98,11 +98,11 @@
                                     <p class="w-60">
                                         <span class="text-black font-weight-medium">Total Actual Expenses: </span>
                                         <span class="font-weight-bold text-black size-20">₦ </span>   
-                                        <input type="text" :class="{'input-has-value-style': computedTotalExpensesStyleEnable}" v-model="total_expenses" class="w-45">
+                                        <input type="text" :class="{'input-has-value-style': computedTotalExpensesStyleEnable}" v-model="amount" class="w-45" required>
                                     </p>
                                 </div>
                                 <div class="d-flex justify-content-center mt-2">
-                                    <button type="submit" class="font-weight-bold">SAVE TODAY'S EXPENSES</button>
+                                    <button type="submit" @click.prevent="submit" class="font-weight-bold">SAVE TODAY'S EXPENSES</button>
                                 </div>
                             </form>
                         </div>
@@ -114,6 +114,7 @@
 </template>
 
 <script>
+
 export default {
     name:"DashBoard",
     data() {
@@ -126,7 +127,7 @@ export default {
                 second_item_amount: "",
                 third_item: "",
                 third_item_amount: "",
-                total_expenses: "40,000.00",
+                amount: "40,000.00",
             expenses:[
                 {
                     date: "30 Nov, 2018",
@@ -146,49 +147,54 @@ export default {
     },
     methods: {
        submit() {
-            let result = {
-                monthly_expenses: this.monthly_expenses,
-                date: this.date,
-                first_item: this.first_item,
-                first_item_amount: this.first_item_amount,
-                second_item: this.second_item,
-                second_item_amount: this.second_item_amount,
-                third_item: this.third_item,
-                third_item_amount: this.third_item_amount,
-                total_expenses: this.total_expenses,
-            }
-            localStorage.setItem('user-info', JSON.stringify(result));
+            this.expenses.push({
+                date:this.date,
+                amount:this.amount
+            });
+            localStorage.setItem('vue-expense', JSON.stringify(this.expenses));
         }
     },
+    watch: {
+        expenses: {
+      handler() {
+        localStorage.setItem('expenses',JSON.stringify(this.expenses))
+      },
+      deep: true
+    }
+  },
+  mounted() {
+    if (localStorage.getItem("expenses")){
+      this.expenses = JSON.parse(localStorage.getItem("expenses"))
+    }
+  },
     computed: {
-    computedMonthlyExpensesStyleEnable: function () { 
-      return this.monthly_expenses && this.monthly_expenses.length > 0;
-    },
-    computedDateStyleEnable: function () { 
-      return this.date && this.date.length > 0;
-    },
-    computedFirstItemStyleEnable: function () { 
-      return this.first_item && this.first_item.length > 0;
-    },
-    computedFirstItemAmountStyleEnable: function () { 
-      return this.first_item_amount && this.first_item_amount.length > 0;
-    },
-    computedSecondItemStyleEnable: function () { 
-      return this.second_item && this.second_item.length > 0;
-    },
-    computedSecondItemAmountStyleEnable: function () { 
-      return this.second_item_amount && this.second_item_amount.length > 0;
-    },
-    computedThirdItemStyleEnable: function () { 
-      return this.third_item && this.third_item.length > 0;
-    },
-    computedThirdItemAmountStyleEnable: function () { 
-      return this.third_item_amount && this.third_item_amount.length > 0;
-    },
-    computedTotalExpensesStyleEnable: function () { 
-      return this.total_expenses && this.total_expenses.length > 0;
-    },
-   
+        computedMonthlyExpensesStyleEnable: function () { 
+        return this.monthly_expenses && this.monthly_expenses.length > 0;
+        },
+        computedDateStyleEnable: function () { 
+        return this.date && this.date.length > 0;
+        },
+        computedFirstItemStyleEnable: function () { 
+        return this.first_item && this.first_item.length > 0;
+        },
+        computedFirstItemAmountStyleEnable: function () { 
+        return this.first_item_amount && this.first_item_amount.length > 0;
+        },
+        computedSecondItemStyleEnable: function () { 
+        return this.second_item && this.second_item.length > 0;
+        },
+        computedSecondItemAmountStyleEnable: function () { 
+        return this.second_item_amount && this.second_item_amount.length > 0;
+        },
+        computedThirdItemStyleEnable: function () { 
+        return this.third_item && this.third_item.length > 0;
+        },
+        computedThirdItemAmountStyleEnable: function () { 
+        return this.third_item_amount && this.third_item_amount.length > 0;
+        },
+        computedTotalExpensesStyleEnable: function () { 
+        return this.amount && this.amount.length > 0;
+        },
   },
 }
 </script>
