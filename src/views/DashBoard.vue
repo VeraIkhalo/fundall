@@ -32,9 +32,8 @@
                             <table class="mt-4">
                                 <thead>
                                     <tr class="">
-                                        
                                         <div class="d-flex">
-                                            <img src="../assets/bullet.svg" alt="">
+                                            <img src="../assets/bullet.svg" alt="" class="head-img">
                                             <div>
                                                 <th class="text-black-100 font-weight-medium">Date</th>
                                                 <th class="text-black-100 font-weight-medium">Amount</th>
@@ -48,7 +47,7 @@
                                             <img src="../assets/bullet.svg" alt="bullet">
                                             <div>
                                                 <td class="text-black-100">{{expense.date}}</td>
-                                                <td class="text-green-200">{{expense.amount}}</td>
+                                                <td class="text-green-200">₦{{expense.amount}}</td>
                                             </div>
                                         </div>
                                     </tr>
@@ -114,7 +113,6 @@
 </template>
 
 <script>
-
 export default {
     name:"DashBoard",
     data() {
@@ -131,27 +129,32 @@ export default {
             expenses:[
                 {
                     date: "30 Nov, 2018",
-                    amount: "₦30,000"
+                    amount: "30,000"
                 },
                  {
                     date: "25 Nov, 2018",
-                    amount: "₦30,000"
+                    amount: "30,000"
                 },
                  {
                     date: "28 Oct, 2018",
-                    amount: "₦30,000"
+                    amount: "30,000"
                 },
             ],
             
         }
     },
+    mounted() {
+    if (localStorage.getItem("expenses")){
+      this.expenses = JSON.parse(localStorage.getItem("expenses"))
+    }
+  },
     methods: {
        submit() {
             this.expenses.push({
                 date:this.date,
                 amount:this.amount
             });
-            localStorage.setItem('vue-expense', JSON.stringify(this.expenses));
+            //localStorage.setItem('vue-expense', JSON.stringify(this.expenses));
         }
     },
     watch: {
@@ -162,11 +165,7 @@ export default {
       deep: true
     }
   },
-  mounted() {
-    if (localStorage.getItem("expenses")){
-      this.expenses = JSON.parse(localStorage.getItem("expenses"))
-    }
-  },
+  
     computed: {
         computedMonthlyExpensesStyleEnable: function () { 
         return this.monthly_expenses && this.monthly_expenses.length > 0;
@@ -234,16 +233,21 @@ export default {
                     border:1px solid #A4B0A3;
                 }
                 table{
+                    .head-img{
+                        visibility:hidden;
+                    }
                     th{
                         padding: 0px 120px 0px 30px;
                         font-family: 'Nunito Sans', sans-serif;
+
                     }    
                    td{
                         padding:20px 60px 30px 30px;
                         font-family: 'Nunito Sans', sans-serif;
                    }
                    img{
-                        padding-left: 20px
+                        padding-left: 20px;
+                        margin-bottom:10px;
                    }
                     
                 }
@@ -297,4 +301,3 @@ export default {
     }
   }
 </style>
-
